@@ -20,7 +20,7 @@ Red Hat provides one the leading API Management tools which provide management s
 If you are planning to follow to the next lab, there is an already running API proxy for the Location API Service in this endpoint:
 
 ```bash
-http://location-service-international.apps.boston-a12a.openshiftworkshop.com
+http://location-service-international.apps.tampa-6f59.openshiftworkshop.com
 ```
 
 ### Environment
@@ -40,7 +40,7 @@ Please ask your instructor for your password.
 If you haven't done so already, you need to login to the **Red Hat Solution Explorer** webpage so that a unique lab environment can be provisioned on-demand for your exclusive use.  You should open a web browser and navigate to:
 
 ```bash
-https://tutorial-web-app-webapp.apps.boston-a12a.openshiftworkshop.com
+https://tutorial-web-app-webapp.apps.tampa-6f59.openshiftworkshop.com
 ```
 
 You will be presented with a login page where you can enter your unique credentials:
@@ -64,7 +64,7 @@ Your 3scale Admin Portal provides access to a number of configuration features. 
 1. Open a browser window and navigate to:
 
     ```bash
-    https://userX-admin.apps.boston-a12a.openshiftworkshop.com/p/login
+    https://userX-admin.apps.tampa-6f59.openshiftworkshop.com/p/login
     ```
 
 1. Accept the self-signed certificate if you haven't.
@@ -102,19 +102,19 @@ By running the command lines, it will automatically setup the 3scale API configu
 	*Replace USERX as your user id, such as user1, user26, and OPENSHIFT_APP_URL, if you are not sure, check with your instructor*
 
 	```bash
-	curl -X POST http://threescale-automate-international.apps.boston-a12a.openshiftworkshop.com/threescale/automate/{YOUR_API_TOKEN}/{USERX}/{OPENSHIFT_APP_URL}
+	curl -X POST http://threescale-automate-international.apps.tampa-6f59.openshiftworkshop.com/threescale/automate/{YOUR_API_TOKEN}/{USERX}/{OPENSHIFT_APP_URL}
 	```
 
 	For example:
 
 	```bash
-	curl -X POST http://threescale-automate-international.apps.boston-a12a.openshiftworkshop.com/threescale/automate/829405ec3d2dd0f91aa8435347827135c323c69757dd2dfb49ed41aa8ceb13ef/userX/apps.boston-a12a.openshiftworkshop.com
+	curl -X POST http://threescale-automate-international.apps.tampa-6f59.openshiftworkshop.com/threescale/automate/829405ec3d2dd0f91aa8435347827135c323c69757dd2dfb49ed41aa8ceb13ef/userX/apps.tampa-6f59.openshiftworkshop.com
 	```
 
 1. The following should be returned as the result:
 
 	```bash
-	API automated, DONE! REMEBER THIS ADDRESS FOR NEXT LAB: PLAN_URL :[ https://userx.apps.boston-a12a.openshiftworkshop.com/signup?plan_ids[]=XXX ]
+	API automated, DONE! REMEBER THIS ADDRESS FOR NEXT LAB: PLAN_URL :[ https://userx.apps.tampa-6f59.openshiftworkshop.com/signup?plan_ids[]=XXX ]
 	```
 
 	*Be sure to copy this text to a text editor for your next lab*
@@ -138,7 +138,7 @@ By running the command lines, it will automatically setup the 3scale API configu
 	The URL should look similar to this:
 
 	```bash
-	https://3scale-admin:82c0dfa9-4adb-41a7-9ac9-a03159d585c0@sso-sso.apps.boston-a12a.openshiftworkshop.com/auth/realms/user50
+	https://3scale-admin:82c0dfa9-4adb-41a7-9ac9-a03159d585c0@sso-sso.apps.tampa-6f59.openshiftworkshop.com/auth/realms/user50
 	```
 
 1. Scroll down to the bottom of the page, and click *Update the Staging Environment*.  Now click the *Back to Integration & Configuration* link.
@@ -156,12 +156,12 @@ By running the command lines, it will automatically setup the 3scale API configu
 
 #### Common Gotcha
 If you encountered error:
-```org.apache.camel.http.common.HttpOperationFailedException: HTTP operation failed invoking https://{USERX}-admin.apps.boston-a12a.openshiftworkshop.com/admin/api/services.xml with statusCode: 422```
+```org.apache.camel.http.common.HttpOperationFailedException: HTTP operation failed invoking https://{USERX}-admin.apps.tampa-6f59.openshiftworkshop.com/admin/api/services.xml with statusCode: 422```
 
 This may be due to a failed build. Troubleshoot by deleting SSO Location API.
 SSO Location API can be located here:
 
-* In your browser, `https://{USERX}-admin.apps.boston-a12a.openshiftworkshop.com`
+* In your browser, `https://{USERX}-admin.apps.tampa-6f59.openshiftworkshop.com`
 * In the tab menu, click **Dashboard**
 * Scroll down to the bottom and click *OVERVIEW* next to the *SSO LOCATION API*
 * Click **edit**
