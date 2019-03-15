@@ -5,9 +5,9 @@
   with_sequence: start=1 end={{ usersno }} format=%d
   when: delete_user_projects
 
-- import_role:
-    name: uninstall_che_multi
-  when: che_multi
+#- import_role:
+#    name: uninstall_che_multi
+#  when: che_multi
 
 - import_role:
     name: uninstall_sso
