@@ -26,6 +26,6 @@ oc get nodes -o jsonpath='{.items[?(@.metadata.labels.node-role\.kubernetes\.io/
 
 7. Run the integreatly playbook
 ```
-ansible-playbook -i inventories/uninstall.workshop.inventory playbooks/openshift/uninstall.yml
+ansible-playbook -i inventories/uninstall.workshop.inventory playbooks/openshift/uninstall.yml -e usersno=<value>
 ```
 
