@@ -20,7 +20,7 @@ Applications can be built from many technologies. In this case we use a simple w
 If you decide to skip the lab you can check how a SSO enabled web applications looks like:
 
 ```bash
-http://www-international.apps.tampa-6f59.openshiftworkshop.com/
+http://www-international.apps.littleton-eedb.openshiftworkshop.com/
 ```
 
 ### Environment
@@ -40,7 +40,7 @@ Please ask your instructor for your password.
 If you haven't done so already, you need to login to the **Red Hat Solution Explorer** webpage so that a unique lab environment can be provisioned on-demand for your exclusive use.  You should open a web browser and navigate to:
 
 ```bash
-https://tutorial-web-app-webapp.apps.tampa-6f59.openshiftworkshop.com
+https://tutorial-web-app-webapp.apps.littleton-eedb.openshiftworkshop.com
 ```
 
 You will be presented with a login page where you can enter your unique credentials:
@@ -67,7 +67,7 @@ OpenShift let you automatically redeploy your changes when you setup a Continuou
 
    ![01-scroll-down](images/deploy-10.png "Scroll Down")
 
-1. In the build configuration page, replace the `CLIENT_ID` from `CHANGE_ME`to the one generated from [Lab 06 Step 2.8](https://github.com/sigreen/dayinthelife-integration/tree/v2-boston/docs/labs/developer-track/lab06#step-2-register-new-accounts-using-developer-portal).  Also ensure that the `SSO_URL` starts with an `https`.   If it does not, then correct it.  It should look like this: `https://sso-sso.apps.tampa-6f59.openshiftworkshop.com`.
+1. In the build configuration page, replace the `CLIENT_ID` from `CHANGE_ME`to the one generated from [Lab 06 Step 2.8](https://github.com/sigreen/dayinthelife-integration/tree/v2-boston/docs/labs/developer-track/lab06#step-2-register-new-accounts-using-developer-portal).  Also ensure that the `SSO_URL` starts with an `https`.   If it does not, then correct it.  It should look like this: `https://sso-sso.apps.littleton-eedb.openshiftworkshop.com`.
 
    ![02-client-id](images/deploy-11.png "Change Client ID")
 
@@ -94,7 +94,7 @@ Redirect URLs are a critical part of the OAuth flow. After a user successfully a
 1. Open a browser window and navigate to:
 
     ```bash
-    http://sso-sso.apps.tampa-6f59.openshiftworkshop.com/auth/admin/userX/console/
+    http://sso-sso.apps.littleton-eedb.openshiftworkshop.com/auth/admin/userX/console/
     ```
 
     *Remember to replace the X with your user number.*
@@ -122,7 +122,7 @@ Redirect URLs are a critical part of the OAuth flow. After a user successfully a
     | Access Type | Public |
     | Standard Flow Enabled | ON |
     | Implicit Flow Enabled | OFF |
-    | Valid Redirect URIs | http://www-userX.apps.tampa-6f59.openshiftworkshop.com/* |
+    | Valid Redirect URIs | http://www-userX.apps.littleton-eedb.openshiftworkshop.com/* |
     | Web Origins | \* |
 
     *Remember to replace the X with your user number.*
@@ -133,7 +133,7 @@ Redirect URLs are a critical part of the OAuth flow. After a user successfully a
 
 ### Step 5: Test the Single Sign On Integration
 
-1. Open a browser tab and navigate to `http://www-userX.apps.tampa-6f59.openshiftworkshop.com`.
+1. Open a browser tab and navigate to `http://www-userX.apps.littleton-eedb.openshiftworkshop.com`.
 
 *Remember to replace the X your user number.*
 

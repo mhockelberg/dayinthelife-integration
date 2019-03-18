@@ -31,7 +31,7 @@ Please ask your instructor for your password.
 If you haven't done so already, you need to login to the **Red Hat Solution Explorer** webpage so that a unique lab environment can be provisioned on-demand for your exclusive use.  You should open a web browser and navigate to:
 
 ```bash
-https://tutorial-web-app-webapp.apps.tampa-6f59.openshiftworkshop.com
+https://tutorial-web-app-webapp.apps.littleton-eedb.openshiftworkshop.com
 ```
 
 You will be presented with a login page where you can enter your unique credentials:
@@ -241,7 +241,7 @@ We will use 3scale to secure our newly deployed Fuse Online integration.  We int
 1. Click on the `3scale Admin Dashboard` from the Red Hat Solution Explorer. The URL should look like
 
     ```bash
-    https://userX-admin.apps.tampa-6f59.openshiftworkshop.com/p/login
+    https://userX-admin.apps.littleton-eedb.openshiftworkshop.com/p/login
     ```
 
     *Remember the `X` variable in the URL with your assigned user number.*
@@ -294,8 +294,8 @@ We will use 3scale to secure our newly deployed Fuse Online integration.  We int
 
 1. Leave the settings for `Private Base URL`as it is. Update the `Staging Public Base URL` and `Production Public Base URL` fields to the following, making sure you change `userX` to your personal userid:
 
-    * Staging Public Base: `https://i-addlocation-userX-apicast-staging.amp.apps.tampa-6f59.openshiftworkshop.com:443`
-    * Production Public Base URL: `https://i-addlocation-userX-apicast-production.amp.apps.tampa-6f59.openshiftworkshop.com:443`
+    * Staging Public Base: `https://i-addlocation-userX-apicast-staging.amp.apps.littleton-eedb.openshiftworkshop.com:443`
+    * Production Public Base URL: `https://i-addlocation-userX-apicast-production.amp.apps.littleton-eedb.openshiftworkshop.com:443`
 
     ![secure-10.png](images/secure-10.png)
 
@@ -434,7 +434,7 @@ We will use an API Tester tool to create a record field in database.
 
 * Method: **POST**
 
-* URL: **`https://i-addlocation-userX-apicast-staging.amp.apps.tampa-6f59.openshiftworkshop.com:443/locations?user_key=XXX` [copy the information you need from the 3scale curl command you copied earlier]**
+* URL: **`https://i-addlocation-userX-apicast-staging.amp.apps.littleton-eedb.openshiftworkshop.com:443/locations?user_key=XXX` [copy the information you need from the 3scale curl command you copied earlier]**
 
 * Request Header: **Content-Type** and **application/json**
 
@@ -461,7 +461,7 @@ We will use an API Tester tool to create a record field in database.
 
   **REQUEST**
   ```
-   http://location-service-userX.apps.tampa-6f59.openshiftworkshop.com/locations/102
+   http://location-service-userX.apps.littleton-eedb.openshiftworkshop.com/locations/102
   ```
 
   **RESPONSE**
