@@ -434,7 +434,7 @@ We will use an API Tester tool to create a record field in database.
 
 * Method: **POST**
 
-* URL: **`https://i-addlocation-userX-apicast-staging.amp.apps.littleton-eedb.openshiftworkshop.com:443/locations?user_key=XXX` [copy the information you need from the 3scale curl command you copied earlier]**
+* URL: **`https://i-addlocation-userX-apicast-staging.amp.apps.littleton-eedb.openshiftworkshop.com:443/locations?user_key=XXX` [copy the information you need from the 3scale curl command you copied earlier and replace /apis.json with /locations]**
 
 * Request Header: **Content-Type** and **application/json**
 
