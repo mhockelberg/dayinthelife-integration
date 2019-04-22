@@ -6,16 +6,16 @@
   when: delete_user_projects
 
 - import_role:
-    name: uninstall_che_multi
-  when: che_multi
-
-- import_role:
     name: uninstall_sso
   when: sso
 
 - import_role:
     name: uninstall_threescale
   when: threescale
+
+- import_role:
+    name: uninstall_backend
+  when: backend
 
 - import_role:
     name: uninstall_apicurio
@@ -28,3 +28,8 @@
 - import_role:
     name: uninstall_microcks
   when: microcks
+
+- name: Resume webapp deployment config
+  shell: oc rollout resume dc/tutorial-web-app -n {{ configmap_namespace | default('webapp') }}
+  register: output
+  failed_when: output.stderr != '' and 'is not paused' not in output.stderr

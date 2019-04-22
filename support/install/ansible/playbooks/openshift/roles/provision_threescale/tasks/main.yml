@@ -10,7 +10,7 @@
 
 - name: Wait until 3scale API is available 
   uri: 
-    url: https://master-admin.{{ ocp_apps_domain }}
+    url: https://master.{{ ocp_apps_domain }}
     method: HEAD
     validate_certs: no
   register: wait_threescale_result
@@ -33,7 +33,7 @@
     name: 'Location API'
     backend_version: '1'
     configure_only: '{{no_threescale_services}}'
-    system_name: 'location-api'
+    system_name: '{{ 999999999999999999999 | random | to_uuid | hash("md5") }}'
     proxy_config: 
       production_endpoint: 'https://location-api.amp.{{ ocp_apps_domain }}:443'
       staging_endpoint: 'https://location-api-staging.amp.{{ ocp_apps_domain }}:443'
@@ -47,14 +47,14 @@
       description: 'Simple WebApp'
 
 - name: Get SSO Token Longer Lifespan
-  shell: "curl --insecure -X POST 'https://secure-sso-{{sso_project}}.{{ocp_apps_domain}}/auth/realms/master/protocol/openid-connect/token' \
+  shell: "curl --insecure -X POST 'https://sso-{{sso_project}}.{{ocp_apps_domain}}/auth/realms/master/protocol/openid-connect/token' \
   -H 'Content-Type: application/x-www-form-urlencoded' -d 'username={{ eval_rhsso_admin_username | default('keyadmin') }}' -d 'password={{ eval_rhsso_admin_password | default('keypassword') }}' -d 'grant_type=password' -d 'client_id=admin-cli'"
   register: token_text
 
 - set_fact: TKN={{ (token_text.stdout | from_json).access_token }}
 
 - name: Get id for 3scale-client
-  shell: "curl --insecure 'https://secure-sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients' \
+  shell: "curl --insecure 'https://sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients' \
   -H 'Content-Type: application/json' -H 'Authorization: Bearer {{TKN}}'"
   register: clients_text
 
@@ -65,7 +65,7 @@
 - debug: var=IdClientAdmin
 
 - name: Get client secret
-  shell: "curl --insecure 'https://secure-sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients/{{ IdClientAdmin }}/client-secret' \
+  shell: "curl --insecure 'https://sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients/{{ IdClientAdmin }}/client-secret' \
   -H 'Content-Type: application/json' -H 'Authorization: Bearer {{TKN}}'"
   register: secret_text
 
@@ -80,13 +80,13 @@
     account_id: '3'
     name: 'SSO Location API'
     backend_version: 'oidc'
-    system_name: 'location-sso'
+    system_name: '{{ 999999999999999999998 | random | to_uuid | hash("md5") }}'
     configure_only: '{{no_threescale_services}}'
     proxy_config: 
       production_endpoint: 'https://location-sso.amp.{{ ocp_apps_domain }}:443'
       staging_endpoint: 'https://location-sso-staging.amp.{{ ocp_apps_domain }}:443'
       backend_endpoint: 'http://location-service-{{ backend_project }}.{{ ocp_apps_domain }}:80'
-      sso_endpoint: 'http://{{threescale_client_id | default("3scale-admin")}}:{{ client_secret }}@sso-{{ sso_project }}.{{ ocp_apps_domain }}/auth/realms/{{threescale_realm | default("threescale")}}'
+      sso_endpoint: 'https://{{threescale_client_id | default("3scale-admin")}}:{{ client_secret }}@sso-{{ sso_project }}.{{ ocp_apps_domain }}/auth/realms/{{threescale_realm | default("threescale")}}'
     application_plan:
       name: 'Secure'
       system_name: 'secure'
@@ -98,7 +98,7 @@
 
 - name: Get id for client 'www-secured'
   uri:
-    url: 'https://secure-sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default("threescale")}}/clients'
+    url: 'https://sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default("threescale")}}/clients'
     return_content: yes
     headers:
       Authorization: 'Bearer {{TKN}}'
@@ -116,7 +116,7 @@
 
 - name: Update the rh sso app
   uri: 
-    url: "https://secure-sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients/{{IdClientApp}}"
+    url: "https://sso-{{sso_project}}.{{ocp_apps_domain}}/auth/admin/realms/{{threescale_realm | default('threescale')}}/clients/{{IdClientApp}}"
     method: PUT
     return_content: yes
     headers:
