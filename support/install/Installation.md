@@ -1,12 +1,12 @@
-# Installation
+# Day In The Life Workshop Installation Guide
 
-## Installing Day In Life Workshop on OpenShift
+## How to Install
 
 This page describes the installation of the Day In Life Workshop from the latest sources from GitHub.
 
 ### Pre-requisites
 
-You will need an OpenShift Container Platform to install this workshop on. You can order a vanilla provisioning from the Red Hat Product Demo System (RHPDS) following this [instructions](https://mojo.redhat.com/docs/DOC-1175640).
+You will need an OpenShift Container Platform environment, that hosts the Integreatly (RHMI) system, to install this workshop on. You can order a vanilla provisioning from the Red Hat Product Demo System (RHPDS) following this [instructions](https://mojo.redhat.com/docs/DOC-1175640).
 
 To install the Day In Life Workshop, you need to have a host machine with the latest stable release version of the OpenShift client tools.
 
@@ -18,7 +18,7 @@ Day In Life Workshop can be installed using automated Ansible playbooks or follo
 
 ### Installing using Ansible
 
-We provide an Ansible playbook to install all the required components and software for this workshop.
+You are provided with an Ansible playbook to install all the required components and software for this workshop.
 
 Installing with Ansible requires creating an inventory file with the variables for configuring the system. Example inventory files can be found in the ansible/inventory folder. The following options are supported:
 
@@ -49,7 +49,7 @@ create_ides | If installing in multitenant mode, this will enable the creation o
 
 An [example inventory](../support/ansible/inventory/workshop.inventory.example) that installs all the components in multitenant mode from the *bastion* machine looks like this:
 
-```bash
+```
 [workshop]
 localhost ansible_connection=local
 
@@ -69,54 +69,70 @@ create_tenants=true
 create_realms=true
 ```
 
-### Procedure from Bastion
+### Installation Instructions
 
-The recommended way to install the workshop is running the ansible playbook from the OpenShift cluster bastion machine. This is the fastest way to run the installer as it's already running in the cluster closest to the master node.
+This section describes how to install this workshop in an Integreatly cluster provisioned from RHDPS.
+
+RHPDS requires the installation Ansible playbook to be executed from within the Bastion node of the OCP cluster running Integreatly.
+
+This is the fastest way to install, as the playbook runs in the cluster closest to the Master node.
 
 1. Login to the bastion machine following the email instructions.
 
-    ```bash
-    ssh -i /path/to/ocp_workshop.pem ec2-user@bastion.GUID.openshiftworkshop.com
-    ```
+2. SSH into the Bastion server:
+```
+bash
+ssh -i /path/to/ocp_workshop.pem ec2-user@bastion.GUID.openshiftworkshop.com
+```
+*Remember to update the GUID with your cluster environment variable (documented in the RHPDS environment system generated email) and the path to the downloaded PEM file.*
 
-    *Remember to update the GUID with your cluster environment variable and the path to the downloaded PEM file.*
+3. Switch to root user:
+```
+sudo -i
+```
 
-1. Git Clone the Day In Life Workshop repository:
+4. Clone the installer repo:
+```
+git clone https://github.com/RedHatWorkshops/dayinthelife-integration.git
+```
 
-    ```bash
-    git clone https://github.com/jbossdemocentral/3scale-api-workshop.git
-    ```
+5. Change to the *install* folder:
+```
+cd dayinthelife-integration/support/install
+```
 
-1. Become super user running the following command:
+6. Set the master node URL and number of users.  Be sure to replace *XX* with the number of users provisioned for your cluster:
+```
+export MASTER_INTERNAL=`oc get nodes -o jsonpath='{.items[?(@.metadata.labels.node-role\.kubernetes\.io/master == "true")].metadata.name}'`
+export NUM_USERS=XX
+```
 
-    ```bash
-    sudo su
-    ```
+7. Change to the local git directory: `cd dayinthelife-integration/support/install/ansible/inventory/`
 
-1. Change to the project *install* folder:
+8. Run the following command to update the `master`, `ocp_domain`, `ocp_apps_domain`, and `usersno` parameters in the `backend.inventory`, `gogs.inventory`, `userproject.inventory`, `workshop.inventory` and `integreatly.inventory` files:
+```
+export INTERNAL_DOMAIN=`echo $MASTER_INTERNAL | sed -r 's/master1\.|\.internal//g'`
+sed -i -e "s/master1.CITY-GUID.internal.*$/${MASTER_INTERNAL}/g" integreatly.inventory
+sed -i -e "s/ocp_domain=.*$/ocp_domain=${INTERNAL_DOMAIN}.openshiftworkshop.com/g" *.inventory
+sed -i -e "s/ocp_apps_domain=.*$/ocp_apps_domain=apps.${INTERNAL_DOMAIN}.openshiftworkshop.com/g" *.inventory
+sed -i -e "s/usersno=.*/usersno=${NUM_USERS}/g" *.inventory
+```
 
-    ```bash
-    cd 3scale-api-workshop/support/install
-    ```
+9. Run the Ansible playbook script:
+```
+ansible-playbook -i /root/dayinthelife-integration/support/install/ansible/inventory/integreatly.inventory /root/dayinthelife-integration/support/install/ansible/playbooks/openshift/integreatly.yml
+```
+*NOTE*: This Ansible playbook is idempotent, meaning you can run it as many times as you like.  If there are any failures the first time around, just run the script again and it should resolve the issue.
 
-1. Run the Ansible playbook.
 
-    ```bash
-    ansible-playbook -i ansible/inventory/workshop.inventory ansible/playbooks/openshift/install.yml 
-    ```
+10. Login to the tutorial web app as a new user, using these credentials:
+```
+Username or email: userXY
+Password: openshift
+```
+*Remember to update the variable XY, seen in the example above, with the numeric digits for your assigned Username*
 
-### Procedure from Laptop
+11. Perform a Sanity Check: Ensure the tutorial-web-app-operator is using the image version `0.17.0` and tutorial-web-app image version is `2.10.3`. Most problems with Integreatly are related to the web app version
 
-1. Login to the OpenShift cluster.
 
-    ```bash
-    oc login -u opentlc-mgr https://master.GUID.openshiftworkshop.com --insecure-skip-tls-verify
-    ```
-
-    *If you install on OpenShift, it is required that you have cluster-admin access in order to set up the required roles for creating namespaces and managing resources in those namespaces*.
-
-1. Run the Ansible playbook.
-
-    ```bash
-    ansible-playbook -i ansible/inventory/workshop.inventory ansible/playbooks/openshift/install.yml 
-    ```
+### INSTALLATION IS COMPLETE!
